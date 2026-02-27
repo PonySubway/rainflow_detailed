@@ -1,11 +1,11 @@
 [tool.poetry]
-name = "rainflow"
-version = "3.2.0"
-description = "Implementation of ASTM E1049-85 rainflow cycle counting algorithm"
-authors = ["Piotr Janiszewski <i.am.like.me@gmail.com>"]
+name = "rainflow_detailed"
+version = "0.1.0"
+description = "Detailed rainflow cycle counting (fork of iamlakeme/rainflow)"
+authors = ["Lechuan Piao"]
 license = "MIT"
 readme = "README.md"
-repository = "https://github.com/iamlikeme/rainflow"
+repository = "https://github.com/PonySubway/rainflow_detailed"
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Science/Research",
