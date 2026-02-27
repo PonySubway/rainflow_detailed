@@ -150,12 +150,13 @@ def count_cycles(series, ndigits=None, nbins=None, binsize=None, is_detailed=Fal
     )
 
     if is_detailed:
-        total_count = [0.0]
+        total_count = 0.0
         _cycles = cycles
         def _detailed_cycles():
+            nonlocal total_count
             for rng, count in _cycles:
-                total_count[0] += count
-                print("DoD: {}, total count: {}".format(rng, total_count[0]))
+                total_count += count
+                print("DoD: {}, total count: {}".format(rng, total_count))
                 yield rng, count
         cycles = _detailed_cycles()
 
