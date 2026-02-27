@@ -262,6 +262,33 @@ def test_count_cycles_exclusive_arguments():
         rainflow.count_cycles(series, binsize=1, ndigits=1)
 
 
+def test_count_cycles_is_detailed(capsys):
+    series = TEST_CASE_1[0]
+    result = rainflow.count_cycles(series, is_detailed=True)
+    captured = capsys.readouterr()
+
+    # Result should be the same as without is_detailed
+    expected = rainflow.count_cycles(series)
+    assert result == expected
+
+    # Check that detailed output was printed
+    lines = captured.out.strip().split("\n")
+    assert len(lines) == 7  # 7 cycles in TEST_CASE_1
+
+    # Verify each line has the expected format and running total
+    total = 0.0
+    for line, (rng, mean, count, i_start, i_end) in zip(lines, TEST_CASE_1[1]):
+        total += count
+        assert line == "DoD: {}, total count: {}".format(rng, total)
+
+
+def test_count_cycles_is_detailed_default_no_output(capsys):
+    series = TEST_CASE_1[0]
+    rainflow.count_cycles(series)
+    captured = capsys.readouterr()
+    assert captured.out == ""
+
+
 @pytest.mark.parametrize(
     ("series", "cycles", "counts", "approx"),
     [TEST_CASE_1, TEST_CASE_2, TEST_CASE_3],
