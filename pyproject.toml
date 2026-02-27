@@ -1,37 +1,25 @@
 [tool.poetry]
-name = "rainflow_detailed"
+name = "rainflow-detailed"
 version = "0.1.0"
 description = "Detailed rainflow cycle counting (fork of iamlakeme/rainflow)"
-authors = ["Lechuan Piao"]
+authors = ["PonySubway"]
 license = "MIT"
 readme = "README.md"
 repository = "https://github.com/PonySubway/rainflow_detailed"
-classifiers = [
-    "Development Status :: 5 - Production/Stable",
-    "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: MIT License",
-    "Operating System :: OS Independent",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3.7",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Topic :: Scientific/Engineering",
-    "Topic :: Software Development :: Libraries :: Python Modules",
+
+# 关键：确保打包出能被 `import rainflow` 导入的东西
+# 情况 A：项目里有 `rainflow/` 目录（包）
+packages = [
+  { include = "rainflow" }
 ]
+# 情况 B：如果项目只有单文件模块 `rainflow.py`（而没有 `rainflow/` 目录），
+# Poetry 通常也能自动识别；若仍失败，需要把代码整理成 `rainflow/` 包结构。
 
 [tool.poetry.dependencies]
 python = ">=3.7"
 
-[tool.poetry.dev-dependencies]
-pytest = [
-    { version = "~4", python = "~2.7" },
-    { version = "*", python = "~3" },
-    { version = "^6.2.5", python = "~3.10" },
-]
-importlib_metadata = { version = "*", python = "<3.8" }
-more-itertools = { version = "<6", python = "~2.7" }
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
