@@ -7,13 +7,9 @@ license = "MIT"
 readme = "README.md"
 repository = "https://github.com/PonySubway/rainflow_detailed"
 
-# 关键：确保打包出能被 `import rainflow` 导入的东西
-# 情况 A：项目里有 `rainflow/` 目录（包）
 packages = [
-  { include = "rainflow" }
+  { include = "rainflow.py", from = "src" }
 ]
-# 情况 B：如果项目只有单文件模块 `rainflow.py`（而没有 `rainflow/` 目录），
-# Poetry 通常也能自动识别；若仍失败，需要把代码整理成 `rainflow/` 包结构。
 
 [tool.poetry.dependencies]
 python = ">=3.7"
