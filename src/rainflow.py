@@ -112,7 +112,7 @@ def extract_cycles(series):
             points.popleft()
 
 
-def count_cycles(series, ndigits=None, nbins=None, binsize=None):
+def count_cycles(series, ndigits=None, nbins=None, binsize=None, is_detailed=False):
     """Count cycles in the series.
 
     Parameters
@@ -125,6 +125,9 @@ def count_cycles(series, ndigits=None, nbins=None, binsize=None):
         Specifies the number of cycle-counting bins.
     binsize : int, optional
         Specifies the width of each cycle-counting bin
+    is_detailed : bool, optional
+        If True, print each cycle's DoD (range) together with the current
+        total count. Default is False.
 
     Arguments ndigits, nbins and binsize are mutually exclusive.
 
@@ -145,6 +148,17 @@ def count_cycles(series, ndigits=None, nbins=None, binsize=None):
         (rng, count)
         for rng, mean, count, i_start, i_end in extract_cycles(series)
     )
+
+    if is_detailed:
+        total_count = 0.0
+        _cycles = cycles
+        def _detailed_cycles():
+            nonlocal total_count
+            for rng, count in _cycles:
+                total_count += count
+                print("DoD: {}, total count: {}".format(rng, total_count))
+                yield rng, count
+        cycles = _detailed_cycles()
 
     if nbins is not None:
         binsize = (max(series) - min(series)) / nbins
